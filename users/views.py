@@ -2,8 +2,10 @@ import sqlite3
 from flask import Blueprint, render_template, flash, redirect, url_for, request, session
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import check_password_hash
+from wtforms import ValidationError
+
 from app import users, db
-from users.flags import flag_recon
+from users.flags import flag_recon1
 from users.forms import RegisterForm, LoginForm, SearchForm, BlogForm
 
 users_blueprint = Blueprint('users', __name__, template_folder='templates')
@@ -42,7 +44,6 @@ def login():
         user = users.query.filter_by(email=form.email.data).first()
 
         if not user or not check_password_hash(user.password, form.password.data):
-            flash('Please check your login details and try again')
 
             return render_template('login.html', form=form)
 
@@ -56,13 +57,13 @@ def login():
 def search():
     form = SearchForm()
 
-    conn = sqlite3.connect('C:/Users/jacob/PycharmProjects/Capture/instance/ctf.db')
+    conn = sqlite3.connect('instance/ctf.db')
     c = conn.cursor()
     res = c.execute("SELECT * FROM products")
 
     if form.validate_on_submit():
         name = request.form.get('name')
-        conn = sqlite3.connect('C:/Users/jacob/PycharmProjects/Capture/instance/ctf.db')
+        conn = sqlite3.connect('instance/ctf.db')
         c = conn.cursor()
         try:
             sql = c.execute("SELECT * FROM products WHERE name LIKE '"'%'+name+'%'"';")
@@ -93,7 +94,7 @@ def submit():
 
     form = SearchForm()
 
-    conn = sqlite3.connect('C:/Users/jacob/PycharmProjects/Capture/instance/ctf.db')
+    conn = sqlite3.connect('instance/ctf.db')
     c = conn.cursor()
     sql = c.execute("SELECT flag_recon FROM users WHERE id=?", (current_user.id,))
     flag_value_rec1 = sql.fetchone()
@@ -101,7 +102,7 @@ def submit():
     if form.validate_on_submit():
         name = request.form.get('name')
 
-        if name == flag_recon:
+        if name == flag_recon1:
             c.execute("UPDATE users SET flag_recon = 1 WHERE id=?", (current_user.id,))
             conn.commit()
             flash('Correct flag, well done!', 'success')
@@ -120,7 +121,7 @@ def submit():
 @users_blueprint.route('/blogs', methods=['GET', 'POST'])
 def blogs():
 
-    conn = sqlite3.connect('C:/Users/jacob/PycharmProjects/Capture/instance/ctf.db')
+    conn = sqlite3.connect('instance/ctf.db')
     c = conn.cursor()
 
     sql = c.execute("SELECT * FROM comments")
@@ -139,7 +140,7 @@ def blogs():
 
 @users_blueprint.route('/delete', methods=['GET', 'POST'])
 def delete():
-    conn = sqlite3.connect('C:/Users/jacob/PycharmProjects/Capture/instance/ctf.db')
+    conn = sqlite3.connect('instance/ctf.db')
     c = conn.cursor()
     c.execute("DELETE FROM comments")
     conn.commit()

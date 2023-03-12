@@ -22,7 +22,7 @@ def privileges():
 
     form = SearchForm()
 
-    conn = sqlite3.connect('C:/Users/jacob/PycharmProjects/Capture/instance/ctf.db')
+    conn = sqlite3.connect('instance/ctf.db')
     c = conn.cursor()
     res = c.execute("SELECT * FROM users")
 
