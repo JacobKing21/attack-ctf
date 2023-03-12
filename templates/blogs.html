@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+{% autoescape false %}
+<div class="container">
+    <form method="POST" action="{{ url_for('users.blogs') }}">
+        {{ form.csrf_token() }}
+        {{ form.content(class="text-box", placeholder="Blog to the world!") }}
+        {{ form.submit(class="blog-submit") }}
+    </form>
+</div>
+<div class="small-container">
+    <form method="POST" action="{{ url_for('users.delete') }}" class="">
+        {{ form.csrf_token() }}
+        {{ form.delete_submit(class="blog-submit", placeholder="Delete all posts") }}
+    </form>
+</div>
+<div class="small-container">
+{% for post in all_posts %}
+
+    {{ post[0] }}
+
+{% endfor %}
+</div>
+{% endautoescape %}
+{% endblock %}

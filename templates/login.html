@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, error in messages %}
+            {% if category == 'error' %}
+              <div class="alert" role="alert">
+            {% else %}
+              <div class="alert" role="alert">
+            {% endif %}
+              {{ error }}
+            </div>
+        {% endfor %}
+      {% endif %}
+  {% endwith %}
+
+<form method="POST" >
+<div class="box">
+    <div class="login-container">
+        <div class="top-header">
+            <span>Have an account?</span>
+            <header>Login</header>
+        </div>
+        {{ form.csrf_token() }}
+        <div class="input-field">
+            <label for="uname"><b>Email</b>
+                {{ form.email(class="input", placeholder="Email") }}
+                {% for error in form.email.errors %}
+                    {{ error }}
+                {% endfor %}
+            </label>
+        </div>
+        <div class="input-field">
+            <label for="psw"><b>Password</b>
+                {{ form.password(type="password", class="input", placeholder="Password") }}
+                {% for error in form.password.errors %}
+                    {{ error }}
+                {% endfor %}
+            </label>
+        </div>
+        <div class="input-field">
+            <label for="sub"><b>Submit</b></label>
+            {{ form.submit(class="submit") }}
+
+        </div>
+        <div class="bottom">
+            <div class="left">
+                <input type="checkbox" id="check">
+                <label for="check">Remember Me</label>
+            </div>
+            <div class="right">
+                <label><a href="#">Forgot password?</a></label>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+<h2>Hints
+    <a id="hint-num">0</a>/3
+    (
+    <a href="#" onclick="showHint(); return false">show</a>
+    )
+</h2>
+<div id="hints">
+    <ol>
+        <li style="display: none" data-hidden="true">
+            <b>1.</b>
+            This login form doesn't limit the amount of login attempts.
+        </li>
+        <li style="display: none" data-hidden="true">
+            <b>2.</b>
+            If you're able to find an admins email, you could brute force log in.
+        </li>
+        <li style="display: none" data-hidden="true">
+            <b>3.</b>
+            Using a Kali Linux virtual machine, there are tools such as John the Ripper or Hydra to crack passwords,
+            which can use built-in wordlists such as rockyou.txt.
+        </li>
+    </ol>
+</div>
+{% endblock %}
