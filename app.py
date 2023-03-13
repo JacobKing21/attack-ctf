@@ -39,7 +39,8 @@ class users(db.Model, UserMixin):
     # User auth information
     email = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
-    flag_recon = db.Column(db.Integer, nullable=False, default=0)
+    flag_recon1 = db.Column(db.Integer, nullable=False, default=0)
+    flag_recon2 = db.Column(db.Integer, nullable=False, default=0)
 
     # User constructor
     def __init__(self, role, email, password, flag_recon):

@@ -14,7 +14,8 @@
   background-color: orange;
   color: white;
   text-align: center;
-  padding-bottom: 20px;
+  margin-top: auto;
+
 }
 .padding-top{
     padding-top: 10px;
@@ -215,7 +216,7 @@ label a{
 table, th, td{
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: auto;
+    margin-bottom: 50px;
     width: 50%;
     height: 50%;
 }
@@ -417,11 +418,14 @@ h2 {
     font-size: 1.5em;
     margin-block-start: 0.83em;
     margin-block-end: 0.83em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
     font-weight: bold;
 }
 ol{
     margin: auto;
     text-align: center;
+}
+.hints{
+    margin-bottom: 50px;
 }

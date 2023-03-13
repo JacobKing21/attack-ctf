@@ -1,76 +1,57 @@
 {% extends "base.html" %}
 {% block content %}
 <body>
+{% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, error in messages %}
+            {% if category == 'error' %}
+                <div class="alert" role="alert">
+            {% else %}
+                <div class="alert" role="alert">
+            {% endif %}
+              {{ error }}
+            </div>
+        {% endfor %}
+      {% endif %}
+  {% endwith %}
 <div class="container">
     <form method="POST" action="{{ url_for('users.submit') }}" class="search-bar">
         {{ form.csrf_token() }}
         <label>
-            {{ form.name(class="name", placeholder="Submit Flags") }}
+            {{ form.name(class="name", placeholder="search anything") }}
         </label>
         {{ form.submit(class="small-submit") }}
     </form>
 </div>
-{% if flag_value_rec1 == (0,) %}
-<h3>Reconnaissance Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-{% endif %}
-{% if flag_value_rec1 == (1,) %}
-<div class="meter">
-	<span style="width: 100%"></span>
-</div>
-{% endif %}
-<h3>Resource Development Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-<h3>Initial Access Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-<h3>Execution Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-<h3>Persistence Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-<h3>Privilege Escalation Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-<h3>Defense Evasion Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-<h3>Credential Access Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-<h3>Discovery Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-<h3>Lateral Movement Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-<h3>Collection Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-<h3>Command and Control Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-<h3>Exfiltration Progress</h3>
-<div class="meter">0%
-	<span style="width: 0"></span>
-</div>
-<h3>Impact Progress</h3>
-<div class="meter">0%
-	<span style="width: 0">0%</span>
-</div>
+<table>
+    <tr>
+        <th>Flag</th>
+        <th>Submitted Status</th>
+    </tr>
+    <tr>
+        <td>Recon Flag 1</td>
+        {% if flag_value_rec1 == (0,) %}
+        <td><img src="/static/dots.png" alt="red dots"></td>
+        {% else %}
+        <td><img src="/static/tick.png" alt="green tick"></td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>Recon Flag 2</td>
+        {% if flag_value_rec2 == (0,) %}
+        <td><img src="/static/dots.png" alt="red dots"></td>
+        {% else %}
+        <td><img src="/static/tick.png" alt="green tick"></td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>Credential Flag 1</td>
+        {% if flag_value_cred1 == (0,) %}
+        <td><img src="/static/dots.png" alt="red dots"></td>
+        {% else %}
+        <td><img src="/static/tick.png" alt="green tick"></td>
+        {% endif %}
+    </tr>
+</table>
+</body>
 {% endblock %}
